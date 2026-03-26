@@ -3,6 +3,7 @@
 /Users/sanjaya/Desktop/untitled folder/portfolio/backend/src/main/java/com/sanjay/portfolio/repository/SkillRepository.java
 /Users/sanjaya/Desktop/untitled folder/portfolio/backend/src/main/java/com/sanjay/portfolio/repository/ExperienceRepository.java
 /Users/sanjaya/Desktop/untitled folder/portfolio/backend/src/main/java/com/sanjay/portfolio/model/Experience.java
+/Users/sanjaya/Desktop/untitled folder/portfolio/backend/src/main/java/com/sanjay/portfolio/exception/GlobalExceptionHandler.java
 /Users/sanjaya/Desktop/untitled folder/portfolio/backend/src/main/java/com/sanjay/portfolio/model/Education.java
 /Users/sanjaya/Desktop/untitled folder/portfolio/backend/src/main/java/com/sanjay/portfolio/PortfolioApplication.java
 /Users/sanjaya/Desktop/untitled folder/portfolio/backend/src/main/java/com/sanjay/portfolio/model/Skill.java
