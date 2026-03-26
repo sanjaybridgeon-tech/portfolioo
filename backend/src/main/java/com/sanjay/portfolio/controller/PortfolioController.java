@@ -1,62 +1,43 @@
 package com.sanjay.portfolio.controller;
 
 import com.sanjay.portfolio.model.*;
-import com.sanjay.portfolio.repository.*;
+import com.sanjay.portfolio.service.PortfolioService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = {"http://localhost:5173", "https://*.onrender.com"}) // Allow Vite frontend and Render deployments
 public class PortfolioController {
 
-    private final PersonalInfoRepository personalInfoRepository;
-    private final SkillRepository skillRepository;
-    private final ExperienceRepository experienceRepository;
-    private final EducationRepository educationRepository;
-    private final ProjectRepository projectRepository;
+    private final PortfolioService portfolioService;
 
-    public PortfolioController(
-            PersonalInfoRepository personalInfoRepository,
-            SkillRepository skillRepository,
-            ExperienceRepository experienceRepository,
-            EducationRepository educationRepository,
-            ProjectRepository projectRepository) {
-        this.personalInfoRepository = personalInfoRepository;
-        this.skillRepository = skillRepository;
-        this.experienceRepository = experienceRepository;
-        this.educationRepository = educationRepository;
-        this.projectRepository = projectRepository;
-    }
-
-    @GetMapping("/health")
-    public String healthCheck() {
-        return "Backend is running";
+    public PortfolioController(PortfolioService portfolioService) {
+        this.portfolioService = portfolioService;
     }
 
     @GetMapping("/personal-info")
     public List<PersonalInfo> getPersonalInfo() {
-        return personalInfoRepository.findAll();
+        return portfolioService.getPersonalInfo();
     }
 
     @GetMapping("/skills")
     public List<Skill> getSkills() {
-        return skillRepository.findAll();
+        return portfolioService.getSkills();
     }
 
     @GetMapping("/experience")
     public List<Experience> getExperience() {
-        return experienceRepository.findAll();
+        return portfolioService.getExperience();
     }
 
     @GetMapping("/education")
     public List<Education> getEducation() {
-        return educationRepository.findAll();
+        return portfolioService.getEducation();
     }
 
     @GetMapping("/projects")
     public List<Project> getProjects() {
-        return projectRepository.findAll();
+        return portfolioService.getProjects();
     }
 }
