@@ -2,21 +2,38 @@ package com.sanjay.portfolio.controller;
 
 import com.sanjay.portfolio.model.*;
 import com.sanjay.portfolio.repository.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:5173") // Allow Vite frontend
+@CrossOrigin(origins = {"http://localhost:5173", "https://*.onrender.com"}) // Allow Vite frontend and Render deployments
 public class PortfolioController {
 
-    @Autowired private PersonalInfoRepository personalInfoRepository;
-    @Autowired private SkillRepository skillRepository;
-    @Autowired private ExperienceRepository experienceRepository;
-    @Autowired private EducationRepository educationRepository;
-    @Autowired private ProjectRepository projectRepository;
+    private final PersonalInfoRepository personalInfoRepository;
+    private final SkillRepository skillRepository;
+    private final ExperienceRepository experienceRepository;
+    private final EducationRepository educationRepository;
+    private final ProjectRepository projectRepository;
+
+    public PortfolioController(
+            PersonalInfoRepository personalInfoRepository,
+            SkillRepository skillRepository,
+            ExperienceRepository experienceRepository,
+            EducationRepository educationRepository,
+            ProjectRepository projectRepository) {
+        this.personalInfoRepository = personalInfoRepository;
+        this.skillRepository = skillRepository;
+        this.experienceRepository = experienceRepository;
+        this.educationRepository = educationRepository;
+        this.projectRepository = projectRepository;
+    }
+
+    @GetMapping("/health")
+    public String healthCheck() {
+        return "Backend is running";
+    }
 
     @GetMapping("/personal-info")
     public List<PersonalInfo> getPersonalInfo() {
