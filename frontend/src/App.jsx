@@ -23,8 +23,9 @@ function App() {
     const fetchData = async () => {
       try {
         const endpoints = ['personal-info', 'skills', 'experience', 'education', 'projects']
+        const apiBaseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080'
         const results = await Promise.all(
-          endpoints.map(ep => fetch(`http://localhost:8080/api/${ep}`).then(res => res.json()))
+          endpoints.map(ep => fetch(`${apiBaseUrl}/api/${ep}`).then(res => res.json()))
         )
 
         setData({
