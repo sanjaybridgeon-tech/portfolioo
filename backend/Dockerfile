@@ -11,4 +11,4 @@ FROM eclipse-temurin:17-jre-jammy
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-XX:+UseContainerSupport", "-Xmx400m", "-Xms200m", "-Djava.security.egd=file:/dev/./urandom", "-jar", "app.jar"]
