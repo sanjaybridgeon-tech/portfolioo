@@ -67,7 +67,15 @@ export default function AdminDashboard({ onLogout }) {
     return (
         <div className="container" style={{ padding: '2rem 0', minHeight: '100vh' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem' }}>
-                <h1 className="gradient-text" style={{ fontSize: '2.5rem' }}>Admin Dashboard</h1>
+                <div>
+                    <h1 className="gradient-text" style={{ fontSize: '2.5rem' }}>Admin Dashboard</h1>
+                    <button 
+                        onClick={() => window.location.href = '/'} 
+                        style={{ background: 'none', border: 'none', color: 'var(--primary-color)', cursor: 'pointer', marginTop: '0.5rem', padding: 0 }}
+                    >
+                        ← Back to Portfolio
+                    </button>
+                </div>
                 <button onClick={onLogout} className="glass" style={{ padding: '0.5rem 1.5rem', cursor: 'pointer' }}>Logout</button>
             </div>
 

@@ -88,6 +88,14 @@ function App() {
           />
           <footer style={{ padding: '2rem 0', textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
             <p>&copy; {new Date().getFullYear()} {info.name}. Built with React & Spring Boot.</p>
+            <div style={{ marginTop: '1rem' }}>
+              <button 
+                onClick={() => navigate('/admin/login')} 
+                style={{ background: 'none', border: 'none', color: 'var(--primary-color)', cursor: 'pointer', fontSize: '0.8rem', opacity: 0.6 }}
+              >
+                Admin Login
+              </button>
+            </div>
           </footer>
         </>
       } />
