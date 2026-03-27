@@ -71,7 +71,7 @@ export default function Hero({ info }) {
                         maxWidth: '450px', 
                         height: '100%', 
                         background: 'var(--surface)',
-                        backgroundImage: `url('/profile.jpg')`, /* User needs to place his photo here */
+                        backgroundImage: `url('${info.profileImage}')`, /* User needs to place his photo in public/profile.jpg */
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                         border: '1px solid var(--surface-border)',

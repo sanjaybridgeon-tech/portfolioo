@@ -5,6 +5,7 @@ export const mockData = {
         location: "Malappuram, Kerala, India (676305)",
         phone: "+91 7510782632",
         email: "sanjaysr2902@gmail.com",
+        profileImage: "/profile.jpg",
         linkedin: "https://www.linkedin.com/in/sanjaysr2902/",
         github: "https://github.com/sanjaybridgeon-tech",
         leetcode: "https://leetcode.com/u/kFV17A9muN/",
