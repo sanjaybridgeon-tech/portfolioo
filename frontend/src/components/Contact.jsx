@@ -3,46 +3,32 @@ export default function Contact({ info, onEmailClick }) {
 
     return (
         <section id="contact" className="container">
-            <div className="glass gradient-border" style={{ padding: '6rem 2rem', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
-                <div style={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', width: '200px', height: '2px', background: 'linear-gradient(90deg, transparent, var(--primary-color), transparent)' }} />
-                
-                <h2 className="gradient-text" style={{ fontSize: '4rem', marginBottom: '1.5rem', fontWeight: 800 }}>Get in Touch</h2>
-                <p style={{ color: 'var(--text-muted)', fontSize: '1.25rem', maxWidth: '600px', margin: '0 auto 4rem auto' }}>
-                    Interested in working together or just want to say hi? My inbox is always open.
-                </p>
-                
-                <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-                    <button 
-                        onClick={onEmailClick} 
-                        className="glass" 
-                        style={{ 
-                            padding: '1.2rem 4rem', 
-                            fontSize: '1.1rem', 
-                            fontWeight: 700, 
-                            cursor: 'pointer',
-                            background: 'var(--primary-color)',
-                            color: 'white',
-                            border: 'none',
-                            boxShadow: '0 0 30px var(--accent-glow)'
-                        }}
-                    >
-                        Send an Email
-                    </button>
-                    
-                    <a 
-                        href={info.linkedin} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="glass" 
-                        style={{ padding: '1.2rem 4rem', fontSize: '1.1rem', fontWeight: 700 }}
-                    >
-                        LinkedIn
-                    </a>
-                </div>
+            <div className="card" style={{ padding: '5rem 3rem', textAlign: 'left', position: 'relative', overflow: 'hidden', background: 'linear-gradient(135deg, var(--surface) 0%, #0c0c0e 100%)' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '4rem', alignItems: 'center' }}>
+                    <div>
+                        <h2 style={{ fontSize: '2.5rem', fontWeight: 700, marginBottom: '1.5rem' }}>Start a Technical Conversation</h2>
+                        <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', maxWidth: '500px', lineHeight: '1.6', marginBottom: '2rem' }}>
+                            Currently evaluating new opportunities for software engineer roles. My inbox is open for technical inquiries and collaborations.
+                        </p>
+                        <button 
+                            onClick={onEmailClick} 
+                            className="btn btn-primary"
+                            style={{ padding: '1rem 2.5rem', fontSize: '1rem' }}
+                        >
+                            Execute Contact Sequence
+                        </button>
+                    </div>
 
-                <div style={{ marginTop: '5rem', display: 'flex', gap: '3rem', justifyContent: 'center', opacity: 0.5, fontSize: '0.9rem' }}>
-                    <a href={info.github} target="_blank" rel="noopener noreferrer" onMouseEnter={(e) => e.target.style.opacity = 1} onMouseLeave={(e) => e.target.style.opacity = 0.5}>GitHub</a>
-                    <a href={info.leetcode} target="_blank" rel="noopener noreferrer" onMouseEnter={(e) => e.target.style.opacity = 1} onMouseLeave={(e) => e.target.style.opacity = 0.5}>LeetCode</a>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+                        <a href={info.linkedin} target="_blank" rel="noopener noreferrer" className="card" style={{ padding: '2rem', textAlign: 'center' }}>
+                            <p style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '0.5rem', fontFamily: 'var(--font-mono)' }}>LINKEDIN</p>
+                            <span style={{ fontWeight: 600 }}>Sanjay A. ↗</span>
+                        </a>
+                        <a href={info.github} target="_blank" rel="noopener noreferrer" className="card" style={{ padding: '2rem', textAlign: 'center' }}>
+                            <p style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '0.5rem', fontFamily: 'var(--font-mono)' }}>GITHUB</p>
+                            <span style={{ fontWeight: 600 }}>Code Repos ↗</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>

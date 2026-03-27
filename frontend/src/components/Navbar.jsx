@@ -6,7 +6,7 @@ export default function Navbar({ dataSource }) {
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
-        const handleScroll = () => setIsScrolled(window.scrollY > 50);
+        const handleScroll = () => setIsScrolled(window.scrollY > 20);
         const checkMobile = () => setIsMobile(window.innerWidth <= 768);
         
         window.addEventListener('scroll', handleScroll);
@@ -29,47 +29,64 @@ export default function Navbar({ dataSource }) {
 
     return (
         <nav 
-            className="glass" 
             style={{
                 position: 'fixed',
-                top: isMobile ? '0' : '1.5rem',
-                left: isMobile ? '0' : '50%',
-                transform: isMobile ? 'none' : 'translateX(-50%)',
-                width: isMobile ? '100%' : 'auto',
-                padding: isMobile ? '1rem 1.5rem' : '0.6rem 1.5rem',
+                top: 0,
+                left: 0,
+                width: '100%',
+                padding: isScrolled ? '0.8rem 2rem' : '1.5rem 2rem',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                gap: '2rem',
                 zIndex: 1000,
-                borderRadius: isMobile ? '0' : '100px',
-                border: isMobile ? 'none' : '1px solid var(--glass-border)',
-                borderBottom: isMobile ? '1px solid var(--glass-border)' : '1px solid var(--glass-border)',
-                background: isScrolled || isMobile ? 'rgba(3, 0, 20, 0.8)' : 'rgba(255, 255, 255, 0.03)',
-                boxShadow: isScrolled ? '0 10px 30px rgba(0,0,0,0.5)' : 'none'
+                background: isScrolled ? 'rgba(9, 9, 11, 0.95)' : 'transparent',
+                borderBottom: isScrolled ? '1px solid var(--surface-border)' : '1px solid transparent',
+                backdropFilter: isScrolled ? 'blur(10px)' : 'none',
+                transition: 'all 0.3s ease'
             }}
         >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                <a href="#home" className="gradient-text" style={{ fontWeight: 800, fontSize: '1.2rem', letterSpacing: '-0.05em' }}>
-                    SANJAY.
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+                <a href="#home" style={{ fontWeight: 700, fontSize: '1.1rem', letterSpacing: '-0.02em', color: 'white' }}>
+                    SANJAY A.
                 </a>
                 
-                {/* Data Source Badge */}
-                <div className={`badge ${dataSource === 'live' ? 'badge-live' : 'badge-demo'}`}>
-                    <div className="badge-dot" />
-                    {dataSource === 'live' ? 'Live Database' : 'Demo Mode'}
+                {/* Minimalist Data Status */}
+                <div style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: '0.4rem', 
+                    fontSize: '0.7rem', 
+                    fontFamily: 'var(--font-mono)', 
+                    color: 'var(--text-muted)',
+                    background: 'var(--surface)',
+                    padding: '0.2rem 0.5rem',
+                    borderRadius: '4px',
+                    border: '1px solid var(--surface-border)'
+                }}>
+                    <div style={{ 
+                        width: '6px', 
+                        height: '6px', 
+                        borderRadius: '50%', 
+                        background: dataSource === 'live' ? '#10b981' : '#f59e0b' 
+                    }} />
+                    {dataSource === 'live' ? 'DB_CONNECTED' : 'MOCK_DATA_LOCAL'}
                 </div>
             </div>
 
             {!isMobile && (
-                <div style={{ display: 'flex', gap: '1.5rem' }}>
+                <div style={{ display: 'flex', gap: '2rem' }}>
                     {navItems.map(item => (
                         <a 
                             key={item.name} 
                             href={item.href} 
-                            style={{ fontSize: '0.9rem', fontWeight: 500, opacity: 0.7 }}
-                            onMouseEnter={(e) => e.target.style.opacity = 1}
-                            onMouseLeave={(e) => e.target.style.opacity = 0.7}
+                            style={{ 
+                                fontSize: '0.85rem', 
+                                fontWeight: 500, 
+                                color: 'var(--text-muted)',
+                                transition: 'color 0.2s ease'
+                            }}
+                            onMouseEnter={(e) => e.target.style.color = 'white'}
+                            onMouseLeave={(e) => e.target.style.color = 'var(--text-muted)'}
                         >
                             {item.name}
                         </a>
@@ -80,7 +97,7 @@ export default function Navbar({ dataSource }) {
             {isMobile && (
                 <button 
                     onClick={() => setIsOpen(!isOpen)}
-                    style={{ background: 'none', border: 'none', color: 'white', fontSize: '1.5rem' }}
+                    style={{ background: 'none', border: 'none', color: 'white', fontSize: '1.2rem', cursor: 'pointer' }}
                 >
                     {isOpen ? '✕' : '☰'}
                 </button>
@@ -88,7 +105,6 @@ export default function Navbar({ dataSource }) {
 
             {isMobile && isOpen && (
                 <div 
-                    className="glass"
                     style={{
                         position: 'absolute',
                         top: '100%',
@@ -98,11 +114,12 @@ export default function Navbar({ dataSource }) {
                         display: 'flex',
                         flexDirection: 'column',
                         gap: '1.5rem',
-                        borderRadius: '0 0 1rem 1rem'
+                        background: 'var(--bg-color)',
+                        borderBottom: '1px solid var(--surface-border)'
                     }}
                 >
                     {navItems.map(item => (
-                        <a key={item.name} href={item.href} onClick={() => setIsOpen(false)}>
+                        <a key={item.name} href={item.href} onClick={() => setIsOpen(false)} style={{ color: 'var(--text-muted)' }}>
                             {item.name}
                         </a>
                     ))}

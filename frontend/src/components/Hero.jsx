@@ -1,85 +1,60 @@
 export default function Hero({ info, onEmailClick }) {
     return (
-        <section id="home" className="container animate-fade-in" style={{
-            position: 'relative',
-            minHeight: '100vh',
+        <section id="home" className="container" style={{
+            minHeight: '80vh',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
-            textAlign: 'center',
-            zIndex: 1
+            textAlign: 'left',
+            paddingTop: '2rem'
         }}>
-            {/* Background Glows */}
-            <div style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                width: '100vw',
-                height: '100vh',
-                background: 'radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.08) 0%, transparent 50%)',
-                zIndex: -1,
-                pointerEvents: 'none'
-            }} />
-
-            <div style={{ marginBottom: '2rem' }}>
-                <span className="badge badge-live" style={{ display: 'inline-flex', marginBottom: '1.5rem', background: 'rgba(59, 130, 246, 0.1)', color: 'var(--secondary-color)', padding: '0.4rem 1rem' }}>
-                    Available for New Opportunities
-                </span>
+            <div style={{ marginBottom: '1.5rem' }}>
+                <div className={`badge ${info ? 'badge-live' : 'badge-demo'}`} style={{ marginBottom: '1.5rem' }}>
+                    <div className="badge-dot" />
+                    Available for Development Roles
+                </div>
                 <h1 style={{ 
-                    fontSize: 'clamp(3.5rem, 10vw, 6.5rem)', 
-                    lineHeight: 1,
-                    marginBottom: '1.5rem',
-                    fontWeight: 800,
-                    letterSpacing: '-0.06em'
+                    fontSize: 'clamp(2.5rem, 8vw, 4.5rem)', 
+                    lineHeight: 1.1,
+                    marginBottom: '1rem',
+                    fontWeight: 700,
+                    color: 'var(--text-main)'
                 }}>
-                    Engineering <br />
-                    <span className="gradient-text">Elite Digital</span> <br />
-                    Experiences
+                    {info.name} <br />
+                    <span style={{ color: 'var(--primary-color)' }}>Software Engineer</span>
                 </h1>
-                <h2 style={{ 
-                    fontSize: 'clamp(1rem, 3vw, 1.5rem)', 
+                <p style={{ 
+                    fontSize: 'clamp(1rem, 3vw, 1.25rem)', 
                     color: 'var(--text-muted)', 
                     fontWeight: 400,
-                    maxWidth: '800px',
-                    margin: '0 auto',
-                    letterSpacing: '0.02em'
+                    maxWidth: '700px',
+                    lineHeight: '1.6'
                 }}>
-                    Specialized in <span style={{ color: 'white', fontWeight: 600 }}>Full-Stack Development</span> & <span style={{ color: 'white', fontWeight: 600 }}>Scaleable Architecture</span>
-                </h2>
+                    B.Tech in Electronics & Communication Engineering. Specialized in <span style={{ color: 'var(--text-main)', fontWeight: 500 }}>Java, Spring Boot, and React</span>. 
+                    Building robust, scalable, and maintainable software systems with engineering precision.
+                </p>
             </div>
 
-            <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center', marginTop: '2rem' }}>
-                <a href="#projects" className="glass" style={{ 
-                    padding: '1rem 3rem', 
-                    background: 'var(--primary-color)', 
-                    color: 'white', 
-                    border: 'none',
-                    fontWeight: 600,
-                    fontSize: '1rem',
-                    boxShadow: '0 0 40px var(--accent-glow)'
-                }}>
-                    Explore Projects
+            <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
+                <a href="#projects" className="btn btn-primary">
+                    View Technical Projects
                 </a>
-                <a href="#contact" className="glass" style={{ 
-                    padding: '1rem 3rem',
-                    fontWeight: 600,
-                    fontSize: '1rem'
-                }}>
-                    Let's Connect
+                <a href="#contact" className="btn btn-outline">
+                    Get in Touch
                 </a>
             </div>
 
             <div style={{ 
                 display: 'flex', 
-                gap: '2.5rem', 
-                justifyContent: 'center', 
-                marginTop: '5rem',
-                opacity: 0.5
+                gap: '2rem', 
+                marginTop: '4rem',
+                fontSize: '0.85rem',
+                fontFamily: 'var(--font-mono)',
+                color: 'var(--text-muted)'
             }}>
-                <a href={info.linkedin} target="_blank" rel="noopener noreferrer" onMouseEnter={(e) => e.target.style.opacity = 1} onMouseLeave={(e) => e.target.style.opacity = 0.5}>LinkedIn</a>
-                <a href={info.github} target="_blank" rel="noopener noreferrer" onMouseEnter={(e) => e.target.style.opacity = 1} onMouseLeave={(e) => e.target.style.opacity = 0.5}>GitHub</a>
-                <a href={info.leetcode} target="_blank" rel="noopener noreferrer" onMouseEnter={(e) => e.target.style.opacity = 1} onMouseLeave={(e) => e.target.style.opacity = 0.5}>LeetCode</a>
+                <a href={info.linkedin} target="_blank" rel="noopener noreferrer" style={{ borderBottom: '1px solid transparent' }} onMouseEnter={(e) => e.target.style.borderColor = 'var(--primary-color)'} onMouseLeave={(e) => e.target.style.borderColor = 'transparent'}>LINKEDIN</a>
+                <a href={info.github} target="_blank" rel="noopener noreferrer" style={{ borderBottom: '1px solid transparent' }} onMouseEnter={(e) => e.target.style.borderColor = 'var(--primary-color)'} onMouseLeave={(e) => e.target.style.borderColor = 'transparent'}>GITHUB</a>
+                <a href={info.leetcode} target="_blank" rel="noopener noreferrer" style={{ borderBottom: '1px solid transparent' }} onMouseEnter={(e) => e.target.style.borderColor = 'var(--primary-color)'} onMouseLeave={(e) => e.target.style.borderColor = 'transparent'}>LEETCODE</a>
             </div>
         </section>
     )

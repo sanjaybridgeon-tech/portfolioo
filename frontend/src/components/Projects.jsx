@@ -1,20 +1,23 @@
 export default function Projects({ projects }) {
+    if (!projects || projects.length === 0) return null;
+
     return (
         <section id="projects" className="container">
-            <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
-                <h2 className="gradient-text" style={{ fontSize: '3rem', marginBottom: '1rem' }}>Selected Works</h2>
-                <p style={{ color: 'var(--text-muted)', maxWidth: '600px', margin: '0 auto' }}>
-                    A collection of high-impact applications focusing on performance, scalability, and user experience.
+            <div style={{ marginBottom: '4.5rem' }}>
+                <h2 style={{ fontSize: '2.5rem', fontWeight: 700, marginBottom: '1rem' }}>Software Projects</h2>
+                <div style={{ width: '40px', height: '3px', background: 'var(--primary-color)', marginBottom: '1.5rem' }} />
+                <p style={{ color: 'var(--text-muted)', maxWidth: '600px', fontSize: '1.1rem' }}>
+                    Engineered solutions focusing on system reliability, performance optimization, and architectural integrity.
                 </p>
             </div>
             
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '2.5rem' }}>
+            <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem' }}>
                 {projects.map(project => (
                     <div 
                         key={project.id} 
-                        className="glass gradient-border" 
+                        className="card" 
                         style={{ 
-                            padding: '2.5rem', 
+                            padding: '2rem', 
                             display: 'flex', 
                             flexDirection: 'column',
                             justifyContent: 'space-between',
@@ -22,34 +25,32 @@ export default function Projects({ projects }) {
                         }}
                     >
                         <div>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem' }}>
-                                <h3 style={{ fontSize: '1.5rem', fontWeight: 700 }}>{project.title}</h3>
-                                <div style={{ width: '12px', height: '12px', background: 'var(--primary-color)', borderRadius: '50%', boxShadow: '0 0 15px var(--primary-color)' }}></div>
-                            </div>
+                            <h3 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '1rem', color: 'var(--text-main)' }}>{project.title}</h3>
                             
                             <p style={{ 
                                 color: 'var(--text-muted)', 
                                 marginBottom: '2rem', 
-                                fontSize: '1.05rem',
-                                lineHeight: '1.7',
-                                minHeight: '100px' 
+                                fontSize: '0.95rem',
+                                lineHeight: '1.6',
+                                minHeight: '80px' 
                             }}>
                                 {project.description}
                             </p>
                         </div>
 
                         <div>
-                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem', marginBottom: '2rem' }}>
+                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '2rem' }}>
                                 {project.technologies.split(',').map(tech => (
                                     <span 
                                         key={tech} 
                                         style={{ 
-                                            fontSize: '0.75rem', 
-                                            color: 'white', 
-                                            background: 'rgba(255,255,255,0.05)',
-                                            padding: '0.3rem 0.8rem',
-                                            borderRadius: '20px',
-                                            border: '1px solid var(--glass-border)'
+                                            fontSize: '0.7rem', 
+                                            fontFamily: 'var(--font-mono)',
+                                            color: 'var(--text-main)', 
+                                            background: 'rgba(255,255,255,0.03)',
+                                            padding: '0.2rem 0.6rem',
+                                            borderRadius: '2px',
+                                            border: '1px solid var(--surface-border)'
                                         }}
                                     >
                                         {tech.trim()}
@@ -62,13 +63,29 @@ export default function Projects({ projects }) {
                                     href={project.link} 
                                     target="_blank" 
                                     rel="noopener noreferrer" 
-                                    className="gradient-text"
-                                    style={{ fontWeight: 700, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+                                    style={{ 
+                                        fontWeight: 600, 
+                                        fontSize: '0.85rem', 
+                                        display: 'flex', 
+                                        alignItems: 'center', 
+                                        gap: '0.5rem',
+                                        color: 'var(--primary-color)'
+                                    }}
                                 >
-                                    View Live Project <span>→</span>
+                                    Documentation / Live ↗
                                 </a>
                             ) : (
-                                <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem', fontStyle: 'italic' }}>Private Repository</span>
+                                <div style={{ 
+                                    fontSize: '0.8rem', 
+                                    fontFamily: 'var(--font-mono)',
+                                    color: 'var(--text-muted)',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '0.5rem'
+                                }}>
+                                    <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#ef4444' }} />
+                                    PRIVATE_CODEBASE
+                                </div>
                             )}
                         </div>
                     </div>

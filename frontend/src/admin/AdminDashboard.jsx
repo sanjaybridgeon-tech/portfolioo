@@ -68,69 +68,64 @@ export default function AdminDashboard({ onLogout }) {
         <div className="container" style={{ padding: '4rem 0', minHeight: '100vh' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '4rem' }}>
                 <div>
-                    <h1 className="gradient-text" style={{ fontSize: '3.5rem', fontWeight: 800, letterSpacing: '-0.05em' }}>Control Center</h1>
+                    <h1 style={{ fontSize: '2.5rem', fontWeight: 700, letterSpacing: '-0.02em' }}>System Administration</h1>
                     <button 
                         onClick={() => window.location.href = '/'} 
-                        style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', marginTop: '0.8rem', padding: 0, fontWeight: 500, display: 'flex', alignItems: 'center', gap: '0.5rem' }}
-                        onMouseEnter={(e) => e.target.style.color = 'var(--primary-color)'}
-                        onMouseLeave={(e) => e.target.style.color = 'var(--text-muted)'}
+                        style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', marginTop: '0.8rem', padding: 0, fontWeight: 500, fontFamily: 'var(--font-mono)', fontSize: '0.8rem' }}
                     >
-                        ← Back to Portfolio
+                        [RETURN_TO_PORTFOLIO]
                     </button>
                 </div>
                 <button 
                     onClick={onLogout} 
-                    className="glass" 
-                    style={{ padding: '0.8rem 2rem', cursor: 'pointer', fontWeight: 600, border: '1px solid rgba(239, 68, 68, 0.2)', color: '#ef4444' }}
+                    className="btn btn-outline" 
+                    style={{ borderColor: 'rgba(239, 68, 68, 0.3)', color: '#ef4444' }}
                 >
-                    Terminate Session
+                    Ends Session
                 </button>
             </div>
 
             {message.text && (
-                <div className="glass" style={{
-                    padding: '1.2rem',
+                <div className="card" style={{
+                    padding: '1rem',
                     marginBottom: '3rem',
                     textAlign: 'center',
-                    fontWeight: 600,
-                    fontSize: '1rem',
-                    borderRadius: '1rem',
-                    background: message.type === 'success' ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)',
+                    fontWeight: 500,
+                    fontSize: '0.9rem',
+                    background: message.type === 'success' ? 'rgba(16, 185, 129, 0.05)' : 'rgba(239, 68, 68, 0.05)',
                     borderColor: message.type === 'success' ? '#10b981' : '#ef4444',
-                    color: message.type === 'success' ? '#10b981' : '#ef4444',
-                    boxShadow: message.type === 'success' ? '0 0 20px rgba(16, 185, 129, 0.1)' : '0 0 20px rgba(239, 68, 68, 0.1)'
+                    color: message.type === 'success' ? '#10b981' : '#ef4444'
                 }}>
-                    {message.type === 'success' ? '✓ ' : '⚠ '} {message.text}
+                    STATUS: {message.text.toUpperCase()}
                 </div>
             )}
 
-            <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: '3rem', alignItems: 'start' }}>
-                <aside style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', position: 'sticky', top: '2rem' }}>
-                    <p style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.5rem', paddingLeft: '1rem' }}>Modules</p>
+            <div style={{ display: 'grid', gridTemplateColumns: '260px 1fr', gap: '3rem' }}>
+                <aside style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                     {['info', 'skills', 'experience', 'projects', 'education'].map(tab => (
                         <button
                             key={tab}
                             onClick={() => setActiveTab(tab)}
-                            className="glass"
                             style={{
-                                padding: '1rem 1.5rem',
+                                padding: '0.8rem 1.2rem',
                                 textAlign: 'left',
                                 cursor: 'pointer',
-                                fontWeight: 600,
-                                background: activeTab === tab ? 'var(--primary-color)' : 'rgba(255,255,255,0.03)',
-                                color: activeTab === tab ? 'white' : 'var(--text-muted)',
-                                border: 'none',
-                                borderRadius: '1rem',
-                                transition: 'var(--transition)',
-                                boxShadow: activeTab === tab ? '0 0 20px var(--accent-glow)' : 'none'
+                                fontWeight: 500,
+                                background: activeTab === tab ? 'var(--surface)' : 'transparent',
+                                color: activeTab === tab ? 'var(--primary-color)' : 'var(--text-muted)',
+                                border: '1px solid',
+                                borderColor: activeTab === tab ? 'var(--surface-border)' : 'transparent',
+                                borderRadius: '4px',
+                                fontFamily: 'var(--font-mono)',
+                                fontSize: '0.8rem'
                             }}
                         >
-                            {tab.charAt(0).toUpperCase() + tab.slice(1)} Data
+                            {tab.toUpperCase()}_MOD
                         </button>
                     ))}
                 </aside>
 
-                <main className="glass gradient-border" style={{ padding: '3rem', minHeight: '600px' }}>
+                <main className="card" style={{ padding: '3rem' }}>
                     {activeTab === 'info' && <PersonalInfoManager data={data.personalInfo[0]} onSave={(updated) => handleUpdate('personal-info', 'PUT', updated)} />}
                     {activeTab === 'skills' && <SkillManager skills={data.skills} onAdd={(skill) => handleUpdate('skills', 'POST', skill)} onDelete={(id) => handleUpdate('skills', 'DELETE', null, id)} />}
                     {activeTab === 'projects' && <ProjectManager projects={data.projects} onAdd={(project) => handleUpdate('projects', 'POST', project)} onDelete={(id) => handleUpdate('projects', 'DELETE', null, id)} />}
