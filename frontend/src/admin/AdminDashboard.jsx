@@ -108,8 +108,8 @@ export default function AdminDashboard({ onLogout }) {
                     {activeTab === 'info' && <PersonalInfoManager data={data.personalInfo[0]} onSave={(updated) => handleUpdate('personal-info', 'PUT', updated)} />}
                     {activeTab === 'skills' && <SkillManager skills={data.skills} onAdd={(skill) => handleUpdate('skills', 'POST', skill)} onDelete={(id) => handleUpdate('skills', 'DELETE', null, id)} />}
                     {activeTab === 'projects' && <ProjectManager projects={data.projects} onAdd={(project) => handleUpdate('projects', 'POST', project)} onDelete={(id) => handleUpdate('projects', 'DELETE', null, id)} />}
-                    {/* Simplified for other sections... */}
-                    {(activeTab === 'experience' || activeTab === 'education') && <p style={{ color: 'var(--text-muted)' }}>Similar forms are implemented here for {activeTab}...</p>}
+                    {activeTab === 'experience' && <ExperienceManager experiences={data.experience} onAdd={(exp) => handleUpdate('experience', 'POST', exp)} onDelete={(id) => handleUpdate('experience', 'DELETE', null, id)} />}
+                    {activeTab === 'education' && <EducationManager education={data.education} onAdd={(edu) => handleUpdate('education', 'POST', edu)} onDelete={(id) => handleUpdate('education', 'DELETE', null, id)} />}
                 </main>
             </div>
         </div>
@@ -131,8 +131,20 @@ function PersonalInfoManager({ data, onSave }) {
                     <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Title</label>
                     <input className="glass" style={{ padding: '0.8rem', color: 'white' }} value={info.title || ''} onChange={(e) => setInfo({ ...info, title: e.target.value })} />
                 </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                    <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Email</label>
+                    <input className="glass" style={{ padding: '0.8rem', color: 'white' }} value={info.email || ''} onChange={(e) => setInfo({ ...info, email: e.target.value })} />
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                    <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Location</label>
+                    <input className="glass" style={{ padding: '0.8rem', color: 'white' }} value={info.location || ''} onChange={(e) => setInfo({ ...info, location: e.target.value })} />
+                </div>
             </div>
-            <button type="submit" className="glass" style={{ padding: '0.8rem 2rem', background: 'var(--primary-color)', color: 'white', border: 'none', cursor: 'pointer' }}>Update Base Info</button>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '1.5rem' }}>
+                <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Professional Summary</label>
+                <textarea className="glass" style={{ padding: '0.8rem', color: 'white', minHeight: '100px', resize: 'vertical' }} value={info.summary || ''} onChange={(e) => setInfo({ ...info, summary: e.target.value })} />
+            </div>
+            <button type="submit" className="glass" style={{ padding: '0.8rem 2rem', background: 'var(--primary-color)', color: 'white', border: 'none', cursor: 'pointer' }}>Update All Info</button>
         </form>
     );
 }
@@ -164,16 +176,74 @@ function SkillManager({ skills, onAdd, onDelete }) {
 }
 
 function ProjectManager({ projects, onAdd, onDelete }) {
-    const [newProj, setNewProj] = useState({ title: '', description: '', link: '', category: '' });
+    const [newProj, setNewProj] = useState({ title: '', description: '', technologies: '', link: '' });
     return (
         <div>
             <h3 style={{ marginBottom: '1.5rem' }}>Projects Management</h3>
-            {/* Form for new project... Simplified for demo */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
+            <form onSubmit={(e) => { e.preventDefault(); onAdd(newProj); setNewProj({ title: '', description: '', technologies: '', link: '' }); }} style={{ display: 'grid', gap: '1rem', marginBottom: '2rem' }}>
+                <input className="glass" placeholder="Title" style={{ padding: '0.8rem', color: 'white' }} value={newProj.title} onChange={(e) => setNewProj({ ...newProj, title: e.target.value })} required />
+                <textarea className="glass" placeholder="Description" style={{ padding: '0.8rem', color: 'white' }} value={newProj.description} onChange={(e) => setNewProj({ ...newProj, description: e.target.value })} required />
+                <input className="glass" placeholder="Technologies (e.g. React, Java)" style={{ padding: '0.8rem', color: 'white' }} value={newProj.technologies} onChange={(e) => setNewProj({ ...newProj, technologies: e.target.value })} />
+                <button type="submit" className="glass" style={{ padding: '0.8rem 2rem', background: 'var(--primary-color)', border: 'none', cursor: 'pointer' }}>Add Project</button>
+            </form>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem' }}>
                 {projects.map(p => (
                     <div key={p.id} className="glass" style={{ padding: '1.5rem' }}>
                         <h4 style={{ marginBottom: '0.5rem' }}>{p.title}</h4>
                         <button onClick={() => onDelete(p.id)} style={{ color: '#ef4444', border: 'none', background: 'none', padding: 0, cursor: 'pointer', fontSize: '0.8rem' }}>Remove Project</button>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+}
+
+function ExperienceManager({ experiences, onAdd, onDelete }) {
+    const [newExp, setNewExp] = useState({ company: '', role: '', duration: '', description: '' });
+    return (
+        <div>
+            <h3 style={{ marginBottom: '1.5rem' }}>Experience Management</h3>
+            <form onSubmit={(e) => { e.preventDefault(); onAdd(newExp); setNewExp({ company: '', role: '', duration: '', description: '' }); }} style={{ display: 'grid', gap: '1rem', marginBottom: '2rem' }}>
+                <input className="glass" placeholder="Company" style={{ padding: '0.8rem', color: 'white' }} value={newExp.company} onChange={(e) => setNewExp({ ...newExp, company: e.target.value })} required />
+                <input className="glass" placeholder="Role" style={{ padding: '0.8rem', color: 'white' }} value={newExp.role} onChange={(e) => setNewExp({ ...newExp, role: e.target.value })} required />
+                <input className="glass" placeholder="Duration (e.g. 2022 - Present)" style={{ padding: '0.8rem', color: 'white' }} value={newExp.duration} onChange={(e) => setNewExp({ ...newExp, duration: e.target.value })} />
+                <textarea className="glass" placeholder="Description" style={{ padding: '0.8rem', color: 'white' }} value={newExp.description} onChange={(e) => setNewExp({ ...newExp, description: e.target.value })} />
+                <button type="submit" className="glass" style={{ padding: '0.8rem 2rem', background: 'var(--primary-color)', border: 'none', cursor: 'pointer' }}>Add Experience</button>
+            </form>
+            <div style={{ display: 'grid', gap: '1rem' }}>
+                {experiences.map(exp => (
+                    <div key={exp.id} className="glass" style={{ padding: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div>
+                            <h4 style={{ marginBottom: '0.2rem' }}>{exp.company}</h4>
+                            <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{exp.role}</p>
+                        </div>
+                        <button onClick={() => onDelete(exp.id)} style={{ color: '#ef4444', border: 'none', background: 'none', cursor: 'pointer' }}>Delete</button>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+}
+
+function EducationManager({ education, onAdd, onDelete }) {
+    const [newEdu, setNewEdu] = useState({ institution: '', degree: '', duration: '' });
+    return (
+        <div>
+            <h3 style={{ marginBottom: '1.5rem' }}>Education Management</h3>
+            <form onSubmit={(e) => { e.preventDefault(); onAdd(newEdu); setNewEdu({ institution: '', degree: '', duration: '' }); }} style={{ display: 'grid', gap: '1rem', marginBottom: '2rem' }}>
+                <input className="glass" placeholder="Institution" style={{ padding: '0.8rem', color: 'white' }} value={newEdu.institution} onChange={(e) => setNewEdu({ ...newEdu, institution: e.target.value })} required />
+                <input className="glass" placeholder="Degree" style={{ padding: '0.8rem', color: 'white' }} value={newEdu.degree} onChange={(e) => setNewEdu({ ...newEdu, degree: e.target.value })} required />
+                <input className="glass" placeholder="Duration" style={{ padding: '0.8rem', color: 'white' }} value={newEdu.duration} onChange={(e) => setNewEdu({ ...newEdu, duration: e.target.value })} />
+                <button type="submit" className="glass" style={{ padding: '0.8rem 2rem', background: 'var(--primary-color)', border: 'none', cursor: 'pointer' }}>Add Education</button>
+            </form>
+            <div style={{ display: 'grid', gap: '1rem' }}>
+                {education.map(edu => (
+                    <div key={edu.id} className="glass" style={{ padding: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div>
+                            <h4 style={{ marginBottom: '0.2rem' }}>{edu.degree}</h4>
+                            <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{edu.institution}</p>
+                        </div>
+                        <button onClick={() => onDelete(edu.id)} style={{ color: '#ef4444', border: 'none', background: 'none', cursor: 'pointer' }}>Delete</button>
                     </div>
                 ))}
             </div>

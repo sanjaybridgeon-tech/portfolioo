@@ -12,14 +12,10 @@ import EmailModal from './components/EmailModal'
 import LoginPage from './admin/LoginPage'
 import AdminDashboard from './admin/AdminDashboard'
 
+import { mockData } from './data/mockData'
+
 function App() {
-  const [data, setData] = useState({
-    personalInfo: [],
-    skills: [],
-    experience: [],
-    education: [],
-    projects: []
-  })
+  const [data, setData] = useState(mockData)
   const [isEmailModalOpen, setIsEmailModalOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'))
@@ -31,24 +27,19 @@ function App() {
         const endpoints = ['personal-info', 'skills', 'experience', 'education', 'projects']
         const apiBaseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080'
         
-        // Add a timeout promise to ensure the loader is visible for at least 800ms for smoothness
-        const minWait = new Promise(resolve => setTimeout(resolve, 800));
-        
-        const fetchResults = Promise.all(
+        const fetchResults = await Promise.all(
           endpoints.map(ep => fetch(`${apiBaseUrl}/api/${ep}`).then(res => {
             if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
             return res.json();
           }))
         )
 
-        const [results] = await Promise.all([fetchResults, minWait]);
-
         setData({
-          personalInfo: results[0],
-          skills: results[1],
-          experience: results[2],
-          education: results[3],
-          projects: results[4]
+          personalInfo: fetchResults[0].length > 0 ? fetchResults[0] : mockData.personalInfo,
+          skills: fetchResults[1].length > 0 ? fetchResults[1] : mockData.skills,
+          experience: fetchResults[2].length > 0 ? fetchResults[2] : mockData.experience,
+          education: fetchResults[3].length > 0 ? fetchResults[3] : mockData.education,
+          projects: fetchResults[4].length > 0 ? fetchResults[4] : mockData.projects
         })
       } catch (error) {
         console.error("Error fetching data:", error)
@@ -76,18 +67,6 @@ function App() {
     setIsLoggedIn(false);
     navigate('/');
   };
-
-  if (isLoading) {
-    return (
-      <div className="container loader-container">
-        <div style={{ height: '80vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-          <div className="skeleton skeleton-title" style={{ width: '60%' }}></div>
-          <div className="skeleton-title skeleton" style={{ width: '40%' }}></div>
-          <div className="skeleton skeleton-text" style={{ width: '50%', height: '1.5rem', marginTop: '2rem' }}></div>
-        </div>
-      </div>
-    )
-  }
 
   return (
     <Routes>
