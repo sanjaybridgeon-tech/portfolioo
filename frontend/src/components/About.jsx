@@ -2,30 +2,27 @@ export default function About({ info }) {
     if (!info) return null;
 
     return (
-        <section id="about" className="container">
-            <h2>Technical Identification</h2>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '2rem' }}>
-                <div className="card">
-                    <p className="text-xs" style={{ marginBottom: '0.5rem' }}>BASE_ROLE</p>
-                    <p style={{ fontWeight: 600, color: 'var(--text-main)' }}>{info.title}</p>
-                </div>
-                <div className="card">
-                    <p className="text-xs" style={{ marginBottom: '0.5rem' }}>GEO_LOCATION</p>
-                    <p style={{ fontWeight: 600, color: 'var(--text-main)' }}>{info.location}</p>
-                </div>
-                <div className="card">
-                    <p className="text-xs" style={{ marginBottom: '0.5rem' }}>AVAILABILITY</p>
-                    <p style={{ fontWeight: 600, color: 'var(--text-main)' }}>ACTIVE_HIRE_POOL</p>
-                </div>
-                <div className="card">
-                    <p className="text-xs" style={{ marginBottom: '0.5rem' }}>CORE_FOCUS</p>
-                    <p style={{ fontWeight: 600, color: 'var(--text-main)' }}>SYSTEM_ARCHITECTURE</p>
-                </div>
+        <section id="about" className="container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '4rem', alignItems: 'start' }}>
+            <div>
+                <span className="section-num">02 / TECHNICAL_INTRODUCTION</span>
+                <h2 style={{ fontSize: '1.5rem', marginBottom: '2rem' }}>Core Value Architecture</h2>
+                <p style={{ maxWidth: '600px', lineHeight: '2', fontSize: '1rem', color: 'var(--text-muted)' }}>
+                    {info.summary}
+                </p>
             </div>
-            <div className="divider" />
-            <p style={{ maxWidth: '800px', lineHeight: '1.7', fontSize: '1rem' }}>
-                {info.summary}
-            </p>
+            
+            <div style={{ display: 'grid', gap: '2rem' }}>
+                {[
+                    { label: 'BASE_STX', value: info.title },
+                    { label: 'LOC_COORD', value: info.location },
+                    { label: 'ENG_STATUS', value: 'ACTIVE_FOR_OPS' }
+                ].map(item => (
+                    <div key={item.label} style={{ borderBottom: '1px solid var(--surface-border)', paddingBottom: '1rem' }}>
+                        <p className="text-xs" style={{ color: 'var(--accent-brown)', marginBottom: '0.5rem' }}>{item.label}</p>
+                        <p style={{ fontSize: '1.1rem', color: 'var(--text-main)', fontFamily: 'var(--font-secondary)' }}>{item.value}</p>
+                    </div>
+                ))}
+            </div>
         </section>
     )
 }

@@ -3,30 +3,30 @@ export default function Experience({ experience }) {
 
     return (
         <section id="experience" className="container">
-            <h2>Professional Log / Experience</h2>
-            <div style={{ display: 'grid', gap: '3rem' }}>
-                {experience.map((exp, index) => (
+            <span className="section-num">05 / TECHNICAL_TIMELINE</span>
+            <div style={{ marginTop: '4rem', display: 'grid', gap: '4rem' }}>
+                {experience.map((exp, idx) => (
                     <div key={exp.id} style={{ 
                         display: 'grid', 
-                        gridTemplateColumns: 'minmax(120px, 150px) 1fr',
-                        gap: '2.5rem',
-                        position: 'relative'
+                        gridTemplateColumns: window.innerWidth <= 768 ? '1fr' : '0.2fr 1.5fr 1fr',
+                        gap: '2rem',
+                        alignItems: 'baseline',
+                        borderBottom: '1px solid var(--surface-border)',
+                        paddingBottom: '3rem'
                     }}>
-                        <div style={{ textAlign: 'right', paddingTop: '0.25rem' }}>
-                            <p className="text-xs" style={{ 
-                                color: 'var(--text-main)', 
-                                fontWeight: 700,
-                                letterSpacing: '0.05em'
-                            }}>
-                                {exp.duration.toUpperCase()}
-                            </p>
+                        <div style={{ fontSize: '3rem', fontFamily: 'var(--font-heading)', color: 'var(--accent-brown)' }}>
+                            0{idx + 1}
                         </div>
                         
-                        <div style={{ borderLeft: '1px solid var(--surface-border)', paddingLeft: '2.5rem', paddingBottom: '1rem' }}>
-                            <h3 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '0.4rem' }}>{exp.role}</h3>
-                            <p style={{ color: 'var(--primary-color)', fontSize: '0.875rem', fontWeight: 600, marginBottom: '1rem', fontFamily: 'var(--font-mono)' }}>
-                                @ {exp.company.toUpperCase()}
+                        <div>
+                            <h3 style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>{exp.role}</h3>
+                            <p style={{ color: 'var(--accent-brown)', fontFamily: 'var(--font-secondary)', textTransform: 'uppercase', letterSpacing: '0.1em', fontSize: '0.9rem' }}>
+                                @ {exp.company}
                             </p>
+                        </div>
+
+                        <div>
+                            <p className="text-xs" style={{ marginBottom: '1rem', color: 'var(--text-main)', opacity: 0.6 }}>// {exp.duration.toUpperCase()}</p>
                             <p style={{ fontSize: '0.9rem', lineHeight: '1.7', color: 'var(--text-muted)' }}>
                                 {exp.description}
                             </p>

@@ -1,63 +1,111 @@
 export default function Hero({ info }) {
     return (
-        <section id="home" className="container" style={{
-            minHeight: '80vh',
+        <section id="home" style={{
+            minHeight: '100vh',
             display: 'flex',
-            flexDirection: 'column',
+            alignItems: 'center',
             justifyContent: 'center',
-            textAlign: 'left',
-            paddingTop: '4rem'
+            position: 'relative',
+            overflow: 'hidden',
+            background: 'var(--bg-color)'
         }}>
-            <div style={{ maxWidth: '800px' }}>
-                <p className="text-xs" style={{ color: 'var(--accent-color)', fontWeight: 600, marginBottom: '1.5rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-                    [SOFTWARE_ENGINEERING_STRATEGY]
-                </p>
-                <h1 style={{ 
-                    fontSize: 'clamp(2.5rem, 8vw, 4rem)', 
-                    lineHeight: 1.05,
-                    marginBottom: '1.5rem',
-                    fontWeight: 700,
-                    color: 'var(--text-main)',
-                    letterSpacing: '-2px'
+            {/* LARGE BACKGROUND TEXT */}
+            <div style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                fontSize: 'clamp(8rem, 25vw, 30rem)',
+                fontFamily: 'var(--font-heading)',
+                color: 'rgba(232, 224, 209, 0.05)',
+                whiteSpace: 'nowrap',
+                userSelect: 'none',
+                zIndex: 0,
+                textAlign: 'center',
+                width: '100%'
+            }}>
+                PORTFOLIO
+            </div>
+
+            <div className="container" style={{ position: 'relative', zIndex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', alignItems: 'center', gap: '4rem' }}>
+                <div style={{ order: window.innerWidth <= 768 ? 2 : 1 }}>
+                    <span className="section-num">01 / INTRODUCTION</span>
+                    <h1 style={{ 
+                        fontSize: 'clamp(4rem, 10vw, 8.5rem)', 
+                        lineHeight: 0.8,
+                        marginBottom: '2rem',
+                        fontWeight: 400,
+                        color: 'var(--text-main)',
+                    }}>
+                        {info.name.split(' ')[0]} <br />
+                        <span style={{ color: 'var(--accent-brown)' }}>{info.name.split(' ')[1]}</span>
+                    </h1>
+                    <p style={{ 
+                        fontSize: '1.2rem', 
+                        color: 'var(--text-muted)', 
+                        fontWeight: 300,
+                        maxWidth: '500px',
+                        lineHeight: '1.7',
+                        marginBottom: '3rem',
+                        fontFamily: 'var(--font-body)'
+                    }}>
+                        Systems Engineer focused on building high-reliability backend architectures and distributed Spring Boot ecosystems. 
+                    </p>
+                    
+                    <div style={{ display: 'flex', gap: '1.5rem' }}>
+                        <a href="#projects" className="btn">VIEW_ARCHITECTURE</a>
+                        <a href="#contact" className="btn" style={{ border: 'none', borderBottom: '1px solid var(--text-muted)', padding: '1rem 0' }}>EXECUTE_CONTACT</a>
+                    </div>
+                </div>
+
+                <div style={{ 
+                    order: window.innerWidth <= 768 ? 1 : 2,
+                    position: 'relative',
+                    height: '600px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
                 }}>
-                    Backend Engineer focused on building scalable, maintainable systems.
-                </h1>
-                <p style={{ 
-                    fontSize: '1.1rem', 
-                    color: 'var(--text-muted)', 
-                    fontWeight: 400,
-                    maxWidth: '650px',
-                    lineHeight: '1.6',
-                    marginBottom: '2.5rem'
-                }}>
-                    Specialized in distributed architecture and advanced Spring Boot ecosystems. 
-                    Obsessed with system reliability and clean architectural boundaries.
-                </p>
-                
-                <div style={{ display: 'flex', gap: '1rem' }}>
-                    <a href="#projects" className="btn">
-                        Review Engineering Projects
-                    </a>
-                    <a href="#contact" className="btn" style={{ background: 'transparent' }}>
-                        Establish Contact
-                    </a>
+                    <div style={{ 
+                        width: '1000%', 
+                        maxWidth: '450px', 
+                        height: '100%', 
+                        background: 'var(--surface)',
+                        backgroundImage: `url('/profile.jpg')`, /* User needs to place his photo here */
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        border: '1px solid var(--surface-border)',
+                        filter: 'grayscale(100%) brightness(0.9)',
+                        transition: 'filter 0.5s ease'
+                    }} 
+                    onMouseEnter={(e) => e.target.style.filter = 'grayscale(0%) brightness(1)'}
+                    onMouseLeave={(e) => e.target.style.filter = 'grayscale(100%) brightness(0.9)'}
+                    />
+                    {/* Decorative Rectangles */}
+                    <div style={{ position: 'absolute', bottom: '-20px', left: '-20px', width: '100px', height: '100px', border: '1px solid var(--accent-brown)', zIndex: -1 }} />
                 </div>
             </div>
 
             <div style={{ 
-                marginTop: '5rem',
-                padding: '1.5rem 0',
-                borderTop: '1px solid var(--surface-border)',
-                display: 'flex',
-                gap: '3rem',
+                position: 'absolute', 
+                bottom: '4rem', 
+                left: '2rem', 
+                display: 'flex', 
+                flexDirection: 'column',
+                gap: '1rem',
                 fontSize: '0.75rem',
-                fontFamily: 'var(--font-mono)',
-                color: 'var(--text-muted)'
+                fontFamily: 'var(--font-secondary)',
+                letterSpacing: '0.3em',
+                color: 'var(--text-muted)',
+                textTransform: 'uppercase'
             }}>
-                <span>JAVA_17+</span>
-                <span>SPRING_BOOT</span>
-                <span>POSTGRESQL</span>
-                <span>DOCKER_CONTAINER</span>
+                <a href={info.linkedin} target="_blank" rel="noopener noreferrer">LINKEDIN</a>
+                <a href={info.github} target="_blank" rel="noopener noreferrer">GITHUB</a>
+                <a href={info.leetcode} target="_blank" rel="noopener noreferrer">LEETCODE</a>
+            </div>
+            
+            <div style={{ position: 'absolute', bottom: '4rem', right: '2rem', fontFamily: 'var(--font-secondary)', color: 'var(--accent-brown)' }}>
+                WWW.PORTFOLIO.SYS
             </div>
         </section>
     )
