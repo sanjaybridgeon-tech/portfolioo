@@ -65,54 +65,72 @@ export default function AdminDashboard({ onLogout }) {
     if (loading) return <div className="container" style={{ textAlign: 'center', marginTop: '10rem' }}>Loading Admin Panel...</div>;
 
     return (
-        <div className="container" style={{ padding: '2rem 0', minHeight: '100vh' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem' }}>
+        <div className="container" style={{ padding: '4rem 0', minHeight: '100vh' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '4rem' }}>
                 <div>
-                    <h1 className="gradient-text" style={{ fontSize: '2.5rem' }}>Admin Dashboard</h1>
+                    <h1 className="gradient-text" style={{ fontSize: '3.5rem', fontWeight: 800, letterSpacing: '-0.05em' }}>Control Center</h1>
                     <button 
                         onClick={() => window.location.href = '/'} 
-                        style={{ background: 'none', border: 'none', color: 'var(--primary-color)', cursor: 'pointer', marginTop: '0.5rem', padding: 0 }}
+                        style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', marginTop: '0.8rem', padding: 0, fontWeight: 500, display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+                        onMouseEnter={(e) => e.target.style.color = 'var(--primary-color)'}
+                        onMouseLeave={(e) => e.target.style.color = 'var(--text-muted)'}
                     >
                         ← Back to Portfolio
                     </button>
                 </div>
-                <button onClick={onLogout} className="glass" style={{ padding: '0.5rem 1.5rem', cursor: 'pointer' }}>Logout</button>
+                <button 
+                    onClick={onLogout} 
+                    className="glass" 
+                    style={{ padding: '0.8rem 2rem', cursor: 'pointer', fontWeight: 600, border: '1px solid rgba(239, 68, 68, 0.2)', color: '#ef4444' }}
+                >
+                    Terminate Session
+                </button>
             </div>
 
             {message.text && (
                 <div className="glass" style={{
-                    padding: '1rem',
-                    marginBottom: '2rem',
+                    padding: '1.2rem',
+                    marginBottom: '3rem',
                     textAlign: 'center',
-                    background: message.type === 'success' ? 'rgba(34, 197, 94, 0.1)' : 'rgba(239, 68, 68, 0.1)',
-                    borderColor: message.type === 'success' ? '#22c55e' : '#ef4444'
+                    fontWeight: 600,
+                    fontSize: '1rem',
+                    borderRadius: '1rem',
+                    background: message.type === 'success' ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)',
+                    borderColor: message.type === 'success' ? '#10b981' : '#ef4444',
+                    color: message.type === 'success' ? '#10b981' : '#ef4444',
+                    boxShadow: message.type === 'success' ? '0 0 20px rgba(16, 185, 129, 0.1)' : '0 0 20px rgba(239, 68, 68, 0.1)'
                 }}>
-                    {message.text}
+                    {message.type === 'success' ? '✓ ' : '⚠ '} {message.text}
                 </div>
             )}
 
-            <div style={{ display: 'grid', gridTemplateColumns: '250px 1fr', gap: '2rem' }}>
-                <aside style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: '3rem', alignItems: 'start' }}>
+                <aside style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', position: 'sticky', top: '2rem' }}>
+                    <p style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.5rem', paddingLeft: '1rem' }}>Modules</p>
                     {['info', 'skills', 'experience', 'projects', 'education'].map(tab => (
                         <button
                             key={tab}
                             onClick={() => setActiveTab(tab)}
                             className="glass"
                             style={{
-                                padding: '1rem',
+                                padding: '1rem 1.5rem',
                                 textAlign: 'left',
                                 cursor: 'pointer',
-                                background: activeTab === tab ? 'var(--primary-color)' : 'rgba(255,255,255,0.05)',
-                                color: activeTab === tab ? 'white' : 'inherit',
-                                border: 'none'
+                                fontWeight: 600,
+                                background: activeTab === tab ? 'var(--primary-color)' : 'rgba(255,255,255,0.03)',
+                                color: activeTab === tab ? 'white' : 'var(--text-muted)',
+                                border: 'none',
+                                borderRadius: '1rem',
+                                transition: 'var(--transition)',
+                                boxShadow: activeTab === tab ? '0 0 20px var(--accent-glow)' : 'none'
                             }}
                         >
-                            {tab.charAt(0).toUpperCase() + tab.slice(1)} Management
+                            {tab.charAt(0).toUpperCase() + tab.slice(1)} Data
                         </button>
                     ))}
                 </aside>
 
-                <main className="glass" style={{ padding: '2rem' }}>
+                <main className="glass gradient-border" style={{ padding: '3rem', minHeight: '600px' }}>
                     {activeTab === 'info' && <PersonalInfoManager data={data.personalInfo[0]} onSave={(updated) => handleUpdate('personal-info', 'PUT', updated)} />}
                     {activeTab === 'skills' && <SkillManager skills={data.skills} onAdd={(skill) => handleUpdate('skills', 'POST', skill)} onDelete={(id) => handleUpdate('skills', 'DELETE', null, id)} />}
                     {activeTab === 'projects' && <ProjectManager projects={data.projects} onAdd={(project) => handleUpdate('projects', 'POST', project)} onDelete={(id) => handleUpdate('projects', 'DELETE', null, id)} />}

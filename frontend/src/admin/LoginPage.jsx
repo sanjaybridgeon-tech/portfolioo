@@ -33,48 +33,75 @@ export default function LoginPage({ onLogin }) {
     };
 
     return (
-        <div className="container" style={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <div className="glass animate-fade-in" style={{ padding: '3rem', width: '100%', maxWidth: '400px' }}>
-                <h2 style={{ textAlign: 'center', marginBottom: '2rem' }}>Admin Login</h2>
+        <div className="container" style={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>
+            {/* Background Glow */}
+            <div style={{ position: 'absolute', width: '300px', height: '300px', background: 'var(--primary-color)', opacity: 0.1, filter: 'blur(100px)', zIndex: -1 }} />
+            
+            <div className="glass gradient-border animate-fade-in" style={{ padding: '3.5rem', width: '100%', maxWidth: '450px' }}>
+                <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+                    <h2 className="gradient-text" style={{ fontSize: '2.5rem', fontWeight: 800, marginBottom: '0.5rem' }}>Access Portal</h2>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Welcome back, Sanjay. Please identify yourself.</p>
+                </div>
+
                 <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                    <div>
-                        <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', color: 'var(--text-muted)' }}>Email Address</label>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                        <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Email</label>
                         <input
                             type="email"
                             required
                             className="glass"
-                            style={{ width: '100%', padding: '0.8rem', background: 'rgba(255,255,255,0.05)', color: 'white', border: '1px solid var(--glass-border)' }}
+                            style={{ padding: '1rem', color: 'white' }}
+                            placeholder="admin@example.com"
                             value={credentials.username}
                             onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
                         />
                     </div>
-                    <div>
-                        <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', color: 'var(--text-muted)' }}>Password</label>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                        <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Security Key</label>
                         <input
                             type="password"
                             required
                             className="glass"
-                            style={{ width: '100%', padding: '0.8rem', background: 'rgba(255,255,255,0.05)', color: 'white', border: '1px solid var(--glass-border)' }}
+                            style={{ padding: '1rem', color: 'white' }}
+                            placeholder="••••••••"
                             value={credentials.password}
                             onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
                         />
                     </div>
-                    {error && <p style={{ color: '#ef4444', fontSize: '0.85rem', textAlign: 'center' }}>{error}</p>}
+                    
+                    {error && (
+                        <div style={{ padding: '0.8rem', borderRadius: '0.5rem', background: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', fontSize: '0.85rem', textAlign: 'center', border: '1px solid rgba(239, 68, 68, 0.2)' }}>
+                            {error}
+                        </div>
+                    )}
+
                     <button
                         type="submit"
                         disabled={loading}
                         className="glass"
                         style={{
-                            padding: '1rem',
+                            padding: '1.1rem',
                             marginTop: '1rem',
                             background: 'var(--primary-color)',
                             color: 'white',
                             border: 'none',
                             cursor: 'pointer',
+                            fontWeight: 700,
+                            letterSpacing: '0.05em',
+                            fontSize: '1rem',
+                            boxShadow: '0 0 20px var(--accent-glow)',
                             opacity: loading ? 0.7 : 1
                         }}
                     >
-                        {loading ? 'Logging in...' : 'Sign In'}
+                        {loading ? 'Authenticating...' : 'Establish Secure Connection'}
+                    </button>
+                    
+                    <button 
+                        type="button"
+                        onClick={() => window.location.href = '/'}
+                        style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontSize: '0.85rem', marginTop: '1rem' }}
+                    >
+                        ← Return to Portfolio
                     </button>
                 </form>
             </div>

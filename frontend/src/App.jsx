@@ -14,8 +14,50 @@ import AdminDashboard from './admin/AdminDashboard'
 
 import { mockData } from './data/mockData'
 
+function ScrollToTop() {
+  const [visible, setVisible] = useState(false);
+  
+  useEffect(() => {
+    const toggleVisible = () => setVisible(window.pageYOffset > 500);
+    window.addEventListener('scroll', toggleVisible);
+    return () => window.removeEventListener('scroll', toggleVisible);
+  }, []);
+
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  if (!visible) return null;
+
+  return (
+    <button 
+      onClick={scrollToTop}
+      className="glass"
+      style={{
+        position: 'fixed',
+        bottom: '2rem',
+        right: '2rem',
+        width: '50px',
+        height: '50px',
+        borderRadius: '50%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: '1.5rem',
+        cursor: 'pointer',
+        zIndex: 999,
+        background: 'var(--primary-color)',
+        color: 'white',
+        border: 'none',
+        boxShadow: '0 0 20px var(--accent-glow)'
+      }}
+    >
+      ↑
+    </button>
+  );
+}
+
 function App() {
   const [data, setData] = useState(mockData)
+  const [dataSource, setDataSource] = useState('demo')
   const [isEmailModalOpen, setIsEmailModalOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'))
@@ -33,6 +75,11 @@ function App() {
             return res.json();
           }))
         )
+
+        const hasLiveData = fetchResults.some(res => res && res.length > 0);
+        if (hasLiveData) {
+          setDataSource('live');
+        }
 
         setData({
           personalInfo: fetchResults[0].length > 0 ? fetchResults[0] : mockData.personalInfo,
@@ -69,45 +116,50 @@ function App() {
   };
 
   return (
-    <Routes>
-      <Route path="/" element={
-        <>
-          <Navbar />
-          <main>
-            <Hero info={info} onEmailClick={toggleEmailModal} />
-            <About info={info} />
-            <Skills skills={data.skills} />
-            <Experience experience={data.experience} />
-            <Projects projects={data.projects} />
-            <Contact info={info} onEmailClick={toggleEmailModal} />
-          </main>
-          <EmailModal
-            email={info.email}
-            isOpen={isEmailModalOpen}
-            onClose={() => setIsEmailModalOpen(false)}
-          />
-          <footer style={{ padding: '2rem 0', textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-            <p>&copy; {new Date().getFullYear()} {info.name}. Built with React & Spring Boot.</p>
-            <div style={{ marginTop: '1rem' }}>
-              <button 
-                onClick={() => navigate('/admin/login')} 
-                style={{ background: 'none', border: 'none', color: 'var(--primary-color)', cursor: 'pointer', fontSize: '0.8rem', opacity: 0.6 }}
-              >
-                Admin Login
-              </button>
-            </div>
-          </footer>
-        </>
-      } />
-      
-      <Route path="/admin/login" element={
-        isLoggedIn ? <Navigate to="/admin" /> : <LoginPage onLogin={handleLogin} />
-      } />
-      
-      <Route path="/admin" element={
-        isLoggedIn ? <AdminDashboard onLogout={handleLogout} /> : <Navigate to="/admin/login" />
-      } />
-    </Routes>
+    <>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={
+          <>
+            <Navbar dataSource={dataSource} />
+            <main>
+              <Hero info={info} onEmailClick={toggleEmailModal} />
+              <About info={info} />
+              <Skills skills={data.skills} />
+              <Experience experience={data.experience} />
+              <Projects projects={data.projects} />
+              <Contact info={info} onEmailClick={toggleEmailModal} />
+            </main>
+            <EmailModal
+              email={info.email}
+              isOpen={isEmailModalOpen}
+              onClose={() => setIsEmailModalOpen(false)}
+            />
+            <footer style={{ padding: '4rem 0', textAlign: 'center', borderTop: '1px solid var(--glass-border)', marginTop: '4rem' }}>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
+                &copy; {new Date().getFullYear()} {info.name}. Engineered for the Web.
+              </p>
+              <div style={{ marginTop: '1.5rem' }}>
+                <button 
+                  onClick={() => navigate('/admin/login')} 
+                  style={{ background: 'none', border: 'none', color: 'var(--primary-color)', cursor: 'pointer', fontSize: '0.8rem', opacity: 0.5 }}
+                >
+                  Administrative Access
+                </button>
+              </div>
+            </footer>
+          </>
+        } />
+        
+        <Route path="/admin/login" element={
+          isLoggedIn ? <Navigate to="/admin" /> : <LoginPage onLogin={handleLogin} />
+        } />
+        
+        <Route path="/admin" element={
+          isLoggedIn ? <AdminDashboard onLogout={handleLogout} /> : <Navigate to="/admin/login" />
+        } />
+      </Routes>
+    </>
   )
 }
 

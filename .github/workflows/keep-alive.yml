@@ -1,0 +1,16 @@
+name: Keep Render Backend Alive
+
+on:
+  schedule:
+    # Runs every 10 minutes (Render free tier sleeps after 15 mins)
+    - cron: '*/10 * * * *'
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Backend
+        run: |
+          curl -s https://portfolioo-4.onrender.com/api/health
+          echo "Backend pinged at $(date)"

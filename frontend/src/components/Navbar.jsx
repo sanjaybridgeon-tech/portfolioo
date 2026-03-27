@@ -1,18 +1,25 @@
 import { useState, useEffect } from 'react';
 
-export default function Navbar() {
-    const [isOpen, setIsOpen] = useState(false);
+export default function Navbar({ dataSource }) {
+    const [isScrolled, setIsScrolled] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
+        const handleScroll = () => setIsScrolled(window.scrollY > 50);
         const checkMobile = () => setIsMobile(window.innerWidth <= 768);
-        checkMobile();
+        
+        window.addEventListener('scroll', handleScroll);
         window.addEventListener('resize', checkMobile);
-        return () => window.removeEventListener('resize', checkMobile);
+        checkMobile();
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('resize', checkMobile);
+        };
     }, []);
 
     const navItems = [
-        { name: 'Home', href: '#home' },
         { name: 'About', href: '#about' },
         { name: 'Skills', href: '#skills' },
         { name: 'Experience', href: '#experience' },
@@ -21,78 +28,86 @@ export default function Navbar() {
     ];
 
     return (
-        <nav className="glass" style={{
-            position: 'fixed',
-            top: isMobile ? '0' : '1.5rem',
-            left: isMobile ? '0' : '50%',
-            transform: isMobile ? 'none' : 'translateX(-50%)',
-            width: isMobile ? '100%' : 'max-content',
-            padding: isMobile ? '1rem 1.5rem' : '0.75rem 2rem',
-            display: 'flex',
-            flexDirection: isMobile ? 'column' : 'row',
-            gap: isMobile ? (isOpen ? '1.5rem' : '0') : '2rem',
-            zIndex: 1000,
-            margin: isMobile ? '0' : '0 auto',
-            borderRadius: isMobile ? '0' : '1rem',
-            transition: 'all 0.4s ease',
-            maxHeight: isMobile ? (isOpen ? '100vh' : '4.5rem') : 'auto',
-            overflow: 'hidden',
-            alignItems: isMobile ? 'flex-start' : 'center',
-            borderTop: isMobile ? 'none' : '1px solid var(--glass-border)',
-            borderLeft: isMobile ? 'none' : '1px solid var(--glass-border)',
-            borderRight: isMobile ? 'none' : '1px solid var(--glass-border)',
-        }}>
-            <div style={{
-                width: '100%',
+        <nav 
+            className="glass" 
+            style={{
+                position: 'fixed',
+                top: isMobile ? '0' : '1.5rem',
+                left: isMobile ? '0' : '50%',
+                transform: isMobile ? 'none' : 'translateX(-50%)',
+                width: isMobile ? '100%' : 'auto',
+                padding: isMobile ? '1rem 1.5rem' : '0.6rem 1.5rem',
                 display: 'flex',
+                alignItems: 'center',
                 justifyContent: 'space-between',
-                alignItems: 'center'
-            }}>
-                {isMobile && (
-                    <span style={{ fontWeight: 'bold', fontSize: '1.2rem' }} className="gradient-text">Portfolio</span>
-                )}
-                {isMobile && (
-                    <button
-                        onClick={() => setIsOpen(!isOpen)}
-                        style={{
-                            background: 'none',
-                            border: 'none',
-                            color: 'var(--text-main)',
-                            fontSize: '1.5rem',
-                            cursor: 'pointer',
-                            padding: '0.5rem'
-                        }}
-                    >
-                        {isOpen ? '✕' : '☰'}
-                    </button>
-                )}
+                gap: '2rem',
+                zIndex: 1000,
+                borderRadius: isMobile ? '0' : '100px',
+                border: isMobile ? 'none' : '1px solid var(--glass-border)',
+                borderBottom: isMobile ? '1px solid var(--glass-border)' : '1px solid var(--glass-border)',
+                background: isScrolled || isMobile ? 'rgba(3, 0, 20, 0.8)' : 'rgba(255, 255, 255, 0.03)',
+                boxShadow: isScrolled ? '0 10px 30px rgba(0,0,0,0.5)' : 'none'
+            }}
+        >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                <a href="#home" className="gradient-text" style={{ fontWeight: 800, fontSize: '1.2rem', letterSpacing: '-0.05em' }}>
+                    SANJAY.
+                </a>
+                
+                {/* Data Source Badge */}
+                <div className={`badge ${dataSource === 'live' ? 'badge-live' : 'badge-demo'}`}>
+                    <div className="badge-dot" />
+                    {dataSource === 'live' ? 'Live Database' : 'Demo Mode'}
+                </div>
             </div>
 
-            <div style={{
-                display: 'flex',
-                flexDirection: isMobile ? 'column' : 'row',
-                gap: isMobile ? '1.5rem' : '2rem',
-                width: isMobile ? '100%' : 'auto',
-                opacity: isMobile ? (isOpen ? 1 : 0) : 1,
-                padding: isMobile ? (isOpen ? '1rem 0' : '0') : '0',
-                transition: 'opacity 0.3s ease'
-            }}>
-                {navItems.map(item => (
-                    <a
-                        key={item.name}
-                        href={item.href}
-                        onClick={() => isMobile && setIsOpen(false)}
-                        style={{
-                            fontSize: isMobile ? '1.1rem' : '1rem',
-                            padding: isMobile ? '0.5rem 0' : '0',
-                            borderBottom: isMobile ? '1px solid rgba(255,255,255,0.05)' : 'none',
-                            width: isMobile ? '100%' : 'auto'
-                        }}
-                    >
-                        {item.name}
-                    </a>
-                ))}
-            </div>
+            {!isMobile && (
+                <div style={{ display: 'flex', gap: '1.5rem' }}>
+                    {navItems.map(item => (
+                        <a 
+                            key={item.name} 
+                            href={item.href} 
+                            style={{ fontSize: '0.9rem', fontWeight: 500, opacity: 0.7 }}
+                            onMouseEnter={(e) => e.target.style.opacity = 1}
+                            onMouseLeave={(e) => e.target.style.opacity = 0.7}
+                        >
+                            {item.name}
+                        </a>
+                    ))}
+                </div>
+            )}
+
+            {isMobile && (
+                <button 
+                    onClick={() => setIsOpen(!isOpen)}
+                    style={{ background: 'none', border: 'none', color: 'white', fontSize: '1.5rem' }}
+                >
+                    {isOpen ? '✕' : '☰'}
+                </button>
+            )}
+
+            {isMobile && isOpen && (
+                <div 
+                    className="glass"
+                    style={{
+                        position: 'absolute',
+                        top: '100%',
+                        left: 0,
+                        width: '100%',
+                        padding: '2rem',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '1.5rem',
+                        borderRadius: '0 0 1rem 1rem'
+                    }}
+                >
+                    {navItems.map(item => (
+                        <a key={item.name} href={item.href} onClick={() => setIsOpen(false)}>
+                            {item.name}
+                        </a>
+                    ))}
+                </div>
+            )}
         </nav>
     );
 }

@@ -1,29 +1,30 @@
 export default function About({ info }) {
+    if (!info) return null;
+
     return (
         <section id="about" className="container">
-            <div className="glass" style={{ padding: '3rem 1.5rem', textAlign: 'center' }}>
-                <h2 style={{ fontSize: '2.5rem', marginBottom: '2rem' }}>About Me</h2>
-                <p style={{ fontSize: '1.1rem', color: 'var(--text-muted)', maxWidth: '800px', margin: '0 auto', lineHeight: '1.7', padding: '0 1rem' }}>
-                    {info.summary}
-                </p>
-                <div style={{
-                    marginTop: '3rem',
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
-                    gap: '1.5rem',
-                    padding: '0 1rem'
-                }}>
-                    <div style={{ padding: '1rem' }}>
-                        <h4 style={{ color: 'var(--primary-color)' }}>Location</h4>
-                        <p>{info.location}</p>
-                    </div>
-                    <div>
-                        <h4 style={{ color: 'var(--primary-color)' }}>Education</h4>
-                        <p>B.Tech in ECE</p>
-                    </div>
-                    <div>
-                        <h4 style={{ color: 'var(--primary-color)' }}>Availability</h4>
-                        <p>Open for opportunities</p>
+            <div className="bento-grid" style={{ alignItems: 'center' }}>
+                <div className="glass gradient-border" style={{ gridColumn: 'span 5', padding: '3rem', position: 'relative', overflow: 'hidden' }}>
+                    <div style={{ position: 'absolute', top: 0, left: 0, width: '4px', height: '100%', background: 'var(--primary-color)' }} />
+                    <h2 className="gradient-text" style={{ fontSize: '2.5rem', marginBottom: '2rem' }}>About Me</h2>
+                    <p style={{ color: 'var(--text-main)', fontSize: '1.1rem', lineHeight: '1.8' }}>
+                        {info.summary}
+                    </p>
+                </div>
+                
+                <div style={{ gridColumn: 'span 7' }}>
+                    <div className="bento-grid" style={{ gap: '1.5rem' }}>
+                        {[
+                            { label: 'Role', value: info.title },
+                            { label: 'Location', value: info.location },
+                            { label: 'Email', value: info.email },
+                            { label: 'Phone', value: info.phone }
+                        ].map(item => (
+                            <div key={item.label} className="glass" style={{ padding: '1.5rem', gridColumn: 'span 6' }}>
+                                <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>{item.label}</p>
+                                <p style={{ fontWeight: 600, fontSize: '1.1rem' }}>{item.value}</p>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>

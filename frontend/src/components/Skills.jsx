@@ -3,14 +3,55 @@ export default function Skills({ skills }) {
 
     return (
         <section id="skills" className="container">
-            <h2 style={{ fontSize: '2.5rem', marginBottom: '3rem', textAlign: 'center' }}>My Skills</h2>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
-                {categories.map(cat => (
-                    <div key={cat} className="glass" style={{ padding: '2rem' }}>
-                        <h3 style={{ marginBottom: '1.5rem', color: 'var(--primary-color)' }}>{cat} Skills</h3>
-                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.8rem' }}>
+            <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+                <h2 className="gradient-text" style={{ fontSize: '3rem', marginBottom: '1rem' }}>Technical Mastery</h2>
+                <p style={{ color: 'var(--text-muted)', maxWidth: '600px', margin: '0 auto' }}>
+                    A comprehensive overview of my specialized stack and professional soft skills.
+                </p>
+            </div>
+            
+            <div className="bento-grid">
+                {categories.map((cat, idx) => (
+                    <div 
+                        key={cat} 
+                        className="glass gradient-border" 
+                        style={{ 
+                            padding: '2.5rem',
+                            gridColumn: idx === 0 ? 'span 7' : 'span 5',
+                            minHeight: '300px'
+                        }}
+                    >
+                        <h3 style={{ 
+                            marginBottom: '1.5rem', 
+                            fontSize: '1.5rem',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.8rem'
+                        }}>
+                            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--primary-color)' }} />
+                            {cat} Pillar
+                        </h3>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
                             {skills.filter(s => s.category === cat).map(skill => (
-                                <span key={skill.id} className="glass" style={{ padding: '0.4rem 1rem', fontSize: '0.9rem', background: 'rgba(255,255,255,0.1)' }}>
+                                <span 
+                                    key={skill.id} 
+                                    className="glass" 
+                                    style={{ 
+                                        padding: '0.6rem 1.2rem', 
+                                        fontSize: '0.9rem', 
+                                        fontWeight: 500,
+                                        letterSpacing: '0.02em',
+                                        transition: 'var(--transition)'
+                                    }}
+                                    onMouseEnter={(e) => {
+                                        e.target.style.background = 'rgba(124, 58, 237, 0.1)';
+                                        e.target.style.borderColor = 'var(--primary-color)';
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        e.target.style.background = 'var(--card-bg)';
+                                        e.target.style.borderColor = 'var(--glass-border)';
+                                    }}
+                                >
                                     {skill.name}
                                 </span>
                             ))}
