@@ -1,4 +1,4 @@
-export default function Hero({ info, onEmailClick }) {
+export default function Hero({ info }) {
     return (
         <section id="home" className="container" style={{
             minHeight: '80vh',
@@ -6,55 +6,58 @@ export default function Hero({ info, onEmailClick }) {
             flexDirection: 'column',
             justifyContent: 'center',
             textAlign: 'left',
-            paddingTop: '2rem'
+            paddingTop: '4rem'
         }}>
-            <div style={{ marginBottom: '1.5rem' }}>
-                <div className={`badge ${info ? 'badge-live' : 'badge-demo'}`} style={{ marginBottom: '1.5rem' }}>
-                    <div className="badge-dot" />
-                    Available for Development Roles
-                </div>
+            <div style={{ maxWidth: '800px' }}>
+                <p className="text-xs" style={{ color: 'var(--accent-color)', fontWeight: 600, marginBottom: '1.5rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+                    [SOFTWARE_ENGINEERING_STRATEGY]
+                </p>
                 <h1 style={{ 
-                    fontSize: 'clamp(2.5rem, 8vw, 4.5rem)', 
-                    lineHeight: 1.1,
-                    marginBottom: '1rem',
+                    fontSize: 'clamp(2.5rem, 8vw, 4rem)', 
+                    lineHeight: 1.05,
+                    marginBottom: '1.5rem',
                     fontWeight: 700,
-                    color: 'var(--text-main)'
+                    color: 'var(--text-main)',
+                    letterSpacing: '-2px'
                 }}>
-                    {info.name} <br />
-                    <span style={{ color: 'var(--primary-color)' }}>Software Engineer</span>
+                    Backend Engineer focused on building scalable, maintainable systems.
                 </h1>
                 <p style={{ 
-                    fontSize: 'clamp(1rem, 3vw, 1.25rem)', 
+                    fontSize: '1.1rem', 
                     color: 'var(--text-muted)', 
                     fontWeight: 400,
-                    maxWidth: '700px',
-                    lineHeight: '1.6'
+                    maxWidth: '650px',
+                    lineHeight: '1.6',
+                    marginBottom: '2.5rem'
                 }}>
-                    B.Tech in Electronics & Communication Engineering. Specialized in <span style={{ color: 'var(--text-main)', fontWeight: 500 }}>Java, Spring Boot, and React</span>. 
-                    Building robust, scalable, and maintainable software systems with engineering precision.
+                    Specialized in distributed architecture and advanced Spring Boot ecosystems. 
+                    Obsessed with system reliability and clean architectural boundaries.
                 </p>
-            </div>
-
-            <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
-                <a href="#projects" className="btn btn-primary">
-                    View Technical Projects
-                </a>
-                <a href="#contact" className="btn btn-outline">
-                    Get in Touch
-                </a>
+                
+                <div style={{ display: 'flex', gap: '1rem' }}>
+                    <a href="#projects" className="btn">
+                        Review Engineering Projects
+                    </a>
+                    <a href="#contact" className="btn" style={{ background: 'transparent' }}>
+                        Establish Contact
+                    </a>
+                </div>
             </div>
 
             <div style={{ 
-                display: 'flex', 
-                gap: '2rem', 
-                marginTop: '4rem',
-                fontSize: '0.85rem',
+                marginTop: '5rem',
+                padding: '1.5rem 0',
+                borderTop: '1px solid var(--surface-border)',
+                display: 'flex',
+                gap: '3rem',
+                fontSize: '0.75rem',
                 fontFamily: 'var(--font-mono)',
                 color: 'var(--text-muted)'
             }}>
-                <a href={info.linkedin} target="_blank" rel="noopener noreferrer" style={{ borderBottom: '1px solid transparent' }} onMouseEnter={(e) => e.target.style.borderColor = 'var(--primary-color)'} onMouseLeave={(e) => e.target.style.borderColor = 'transparent'}>LINKEDIN</a>
-                <a href={info.github} target="_blank" rel="noopener noreferrer" style={{ borderBottom: '1px solid transparent' }} onMouseEnter={(e) => e.target.style.borderColor = 'var(--primary-color)'} onMouseLeave={(e) => e.target.style.borderColor = 'transparent'}>GITHUB</a>
-                <a href={info.leetcode} target="_blank" rel="noopener noreferrer" style={{ borderBottom: '1px solid transparent' }} onMouseEnter={(e) => e.target.style.borderColor = 'var(--primary-color)'} onMouseLeave={(e) => e.target.style.borderColor = 'transparent'}>LEETCODE</a>
+                <span>JAVA_17+</span>
+                <span>SPRING_BOOT</span>
+                <span>POSTGRESQL</span>
+                <span>DOCKER_CONTAINER</span>
             </div>
         </section>
     )

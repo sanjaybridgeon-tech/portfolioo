@@ -1,35 +1,30 @@
-export default function Contact({ info, onEmailClick }) {
+export default function Contact({ info }) {
     if (!info) return null;
 
-    return (
-        <section id="contact" className="container">
-            <div className="card" style={{ padding: '5rem 3rem', textAlign: 'left', position: 'relative', overflow: 'hidden', background: 'linear-gradient(135deg, var(--surface) 0%, #0c0c0e 100%)' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '4rem', alignItems: 'center' }}>
-                    <div>
-                        <h2 style={{ fontSize: '2.5rem', fontWeight: 700, marginBottom: '1.5rem' }}>Start a Technical Conversation</h2>
-                        <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', maxWidth: '500px', lineHeight: '1.6', marginBottom: '2rem' }}>
-                            Currently evaluating new opportunities for software engineer roles. My inbox is open for technical inquiries and collaborations.
-                        </p>
-                        <button 
-                            onClick={onEmailClick} 
-                            className="btn btn-primary"
-                            style={{ padding: '1rem 2.5rem', fontSize: '1rem' }}
-                        >
-                            Execute Contact Sequence
-                        </button>
-                    </div>
+    const contactChannels = [
+        { label: 'E_MAIL_ADDRESS', value: info.email, href: `mailto:${info.email}` },
+        { label: 'LINKEDIN_PROFESSIONAL', value: 'sanjay-a-professional', href: info.linkedin },
+        { label: 'GITHUB_BASE', value: 'sanjaydev-sys', href: info.github }
+    ];
 
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
-                        <a href={info.linkedin} target="_blank" rel="noopener noreferrer" className="card" style={{ padding: '2rem', textAlign: 'center' }}>
-                            <p style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '0.5rem', fontFamily: 'var(--font-mono)' }}>LINKEDIN</p>
-                            <span style={{ fontWeight: 600 }}>Sanjay A. ↗</span>
-                        </a>
-                        <a href={info.github} target="_blank" rel="noopener noreferrer" className="card" style={{ padding: '2rem', textAlign: 'center' }}>
-                            <p style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '0.5rem', fontFamily: 'var(--font-mono)' }}>GITHUB</p>
-                            <span style={{ fontWeight: 600 }}>Code Repos ↗</span>
-                        </a>
-                    </div>
-                </div>
+    return (
+        <section id="contact" className="container" style={{ borderBottom: 'none', paddingBottom: '12rem' }}>
+            <h2>Establish Connection / Protocols</h2>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
+                {contactChannels.map(channel => (
+                    <a 
+                        key={channel.label}
+                        href={channel.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="card"
+                        style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}
+                    >
+                        <span className="text-xs" style={{ color: 'var(--accent-color)' }}>{channel.label}</span>
+                        <span style={{ fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-main)' }}>{channel.value}</span>
+                        <span className="text-xs" style={{ marginTop: '0.5rem', opacity: 0.5 }}>→ OPEN_EXTERNAL_CHANNEL</span>
+                    </a>
+                ))}
             </div>
         </section>
     )

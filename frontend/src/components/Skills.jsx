@@ -4,49 +4,33 @@ export default function Skills({ skills }) {
 
     return (
         <section id="skills" className="container">
-            <div style={{ marginBottom: '4.5rem' }}>
-                <h2 style={{ fontSize: '2.5rem', fontWeight: 700, marginBottom: '1rem' }}>Technical Stack</h2>
-                <div style={{ width: '40px', height: '3px', background: 'var(--primary-color)', marginBottom: '1.5rem' }} />
-                <p style={{ color: 'var(--text-muted)', maxWidth: '600px', fontSize: '1.1rem' }}>
-                    A detailed focus on core technologies, development tools, and architectural frameworks.
-                </p>
-            </div>
-            
+            <h2>Technical Stack</h2>
             <div style={{ 
                 display: 'grid', 
-                gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
-                gap: '1.5rem' 
+                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', 
+                gap: '1px',
+                background: 'var(--surface-border)',
+                border: '1px solid var(--surface-border)'
             }}>
                 {categories.map((cat) => (
-                    <div key={cat} className="card" style={{ padding: '2.5rem' }}>
-                        <h3 style={{ 
-                            marginBottom: '1.5rem', 
-                            fontSize: '1rem',
-                            fontWeight: 700,
-                            color: 'var(--text-main)',
+                    <div key={cat} style={{ padding: '2rem', background: 'var(--bg-color)' }}>
+                        <h4 style={{ 
+                            fontSize: '0.7rem', 
+                            fontWeight: 700, 
+                            color: 'var(--primary-color)',
                             textTransform: 'uppercase',
                             letterSpacing: '0.15em',
-                            fontFamily: 'var(--font-mono)'
+                            fontFamily: 'var(--font-mono)',
+                            marginBottom: '1.5rem'
                         }}>
                             {cat}
-                        </h3>
-                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
+                        </h4>
+                        <div style={{ display: 'grid', gap: '0.8rem' }}>
                             {skills.filter(s => s.category === cat).map(skill => (
-                                <span 
-                                    key={skill.id} 
-                                    style={{ 
-                                        padding: '0.4rem 0.8rem', 
-                                        fontSize: '0.85rem', 
-                                        fontWeight: 500,
-                                        fontFamily: 'var(--font-mono)',
-                                        color: 'var(--text-muted)',
-                                        background: 'rgba(255,255,255,0.03)',
-                                        border: '1px solid var(--surface-border)',
-                                        borderRadius: '4px'
-                                    }}
-                                >
-                                    {skill.name}
-                                </span>
+                                <div key={skill.id} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                    <div style={{ width: '4px', height: '1px', background: 'var(--primary-color)' }} />
+                                    <span style={{ fontSize: '0.875rem', color: 'var(--text-main)', fontFamily: 'var(--font-family)' }}>{skill.name}</span>
+                                </div>
                             ))}
                         </div>
                     </div>

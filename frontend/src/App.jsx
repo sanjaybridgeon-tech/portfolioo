@@ -8,6 +8,7 @@ import Experience from './components/Experience'
 import Projects from './components/Projects'
 import Contact from './components/Contact'
 import Navbar from './components/Navbar'
+import EngineeringFocus from './components/EngineeringFocus'
 import EmailModal from './components/EmailModal'
 import LoginPage from './admin/LoginPage'
 import AdminDashboard from './admin/AdminDashboard'
@@ -30,24 +31,19 @@ function ScrollToTop() {
   return (
     <button 
       onClick={scrollToTop}
-      className="glass"
+      className="btn"
       style={{
         position: 'fixed',
         bottom: '2rem',
         right: '2rem',
-        width: '50px',
-        height: '50px',
-        borderRadius: '50%',
+        width: '44px',
+        height: '44px',
+        borderRadius: '4px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        fontSize: '1.5rem',
-        cursor: 'pointer',
-        zIndex: 999,
-        background: 'var(--primary-color)',
-        color: 'white',
-        border: 'none',
-        boxShadow: '0 0 20px var(--accent-glow)'
+        fontSize: '1.2rem',
+        zIndex: 999
       }}
     >
       ↑
@@ -121,10 +117,11 @@ function App() {
       <Routes>
         <Route path="/" element={
           <>
-            <Navbar dataSource={dataSource} />
+            <Navbar />
             <main>
               <Hero info={info} onEmailClick={toggleEmailModal} />
               <About info={info} />
+              <EngineeringFocus />
               <Skills skills={data.skills} />
               <Experience experience={data.experience} />
               <Projects projects={data.projects} />
@@ -135,17 +132,30 @@ function App() {
               isOpen={isEmailModalOpen}
               onClose={() => setIsEmailModalOpen(false)}
             />
-            <footer style={{ padding: '4rem 0', textAlign: 'center', borderTop: '1px solid var(--glass-border)', marginTop: '4rem' }}>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-                &copy; {new Date().getFullYear()} {info.name}. Engineered for the Web.
-              </p>
-              <div style={{ marginTop: '1.5rem' }}>
-                <button 
-                  onClick={() => navigate('/admin/login')} 
-                  style={{ background: 'none', border: 'none', color: 'var(--primary-color)', cursor: 'pointer', fontSize: '0.8rem', opacity: 0.5 }}
-                >
-                  Administrative Access
-                </button>
+            <footer style={{ padding: '4rem 0', borderTop: '1px solid var(--surface-border)', marginTop: '4rem' }}>
+              <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '2rem' }}>
+                <div>
+                  <p style={{ color: 'var(--text-main)', fontWeight: 600, fontSize: '0.9rem', marginBottom: '0.5rem' }}>
+                    {info.name} / System Engineered Portfolio
+                  </p>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>
+                    &copy; {new Date().getFullYear()} — Built for high-reliability systems.
+                  </p>
+                </div>
+
+                <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
+                  <div className="status-indicator">
+                    <div className={`dot ${dataSource === 'live' ? 'dot-live' : 'dot-demo'}`} />
+                    <span>SYS_STATUS: {dataSource.toUpperCase()}</span>
+                  </div>
+                  
+                  <button 
+                    onClick={() => navigate('/admin/login')} 
+                    style={{ background: 'none', border: 'none', color: 'var(--primary-color)', cursor: 'pointer', fontSize: '0.75rem', fontFamily: 'var(--font-mono)' }}
+                  >
+                    [AUTH_PORTAL]
+                  </button>
+                </div>
               </div>
             </footer>
           </>
